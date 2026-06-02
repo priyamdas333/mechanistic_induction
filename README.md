@@ -1,3 +1,2 @@
-# mechanistic_induction
+# Reverse Engineering Attention Heads for Induction Behaviour detection in Small Transformers
 
-Reverse Engineering Induction Heads in Small Transformers
