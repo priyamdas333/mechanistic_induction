@@ -169,6 +169,22 @@ However:
 A head may attend to the correct location while contributing little to the final prediction.
 
 ---
+# OV Circuit Analysis
+
+There are 2 circuits associated with each attention_head:
+1. QK circuit:WHERE to attend
+2. OV circuit:WHAT to copy from the attended position
+
+OVfull = WU ⋅ WO ⋅ WV ⋅ WE.T
+
+OVfull[i,j] : If the attention head is attending to position j, how much it boosts the 
+logit for predicting i
+
+For an induction head: attending to token A should boost the logit of the token 
+that follows A in the pattern.
+
+This OV circuit analysis is very important in analyzing whether a particular attention head is actually following 
+induction behaviour by boosting the logits of the previous spcific repeated sequence token.
 
 # Experiment 2: Causal Head Ablation
 
