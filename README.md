@@ -26,33 +26,6 @@ A Concrete Example: Imagine a sequence where the pattern "abcde" repeats. When t
 Different circuit activations -> Triggering different attention heads -> Induction behaviour
 Induction head matches current token with the previous token embedding held by the “previous token” head and hence can predict the next token
 
-We investigate two distinct methodologies to identify and track these heads, exposing a fascinating discrepancy between **geometric correlation** and **functional causality**.
-
-### Methodology 1: Attention Pattern Analysis (Correlation)
-We track the attention matrices $A_{l,h}$ across all layers $l$ and heads $h$. An induction head is mathematically hypothesized to exhibit a *shifted-diagonal* attention pattern, consistently looking back exactly $N$ tokens (where $N = \text{pattern\_len}$).
-$$\text{Induction Score}(l, h) = \frac{1}{|S|} \sum_{i \in S} A_{l,h}[i, i - \text{pattern\_len}]$$
-
-### Methodology 2: Causal Ablation (Causality)
-We perform intervention experiments by zeroing out the direct output vector of specific attention heads during the forward pass ($O_{l,h} \leftarrow 0$) and measuring the downstream cross-entropy loss delta ($\Delta \mathcal{L}$) or accuracy drop on a sequence repetition task.
-$$\Delta \mathcal{L}(l,h) = \mathcal{L}(\mathbf{x}; \text{Ablated}_{l,h}) - \mathcal{L}(\mathbf{x}; \text{Baseline})$$
-
----
-
-## 📊 Empirical Observations & Discrepancies
-
-When evaluating a toy 2-layer, 4-head transformer on a repeated-token synthetic dataset, our pipeline surfaced an unexpected, non-trivial result:
-
-| Measurement Approach | Primary Target Identified | Metric Value / Impact |
-| :--- | :--- | :--- |
-| **Methodology 1: Attention Score** | **Layer 0, Head 1 (L0H1)** | `0.91` (Perfect Shifted Diagonal) |
-| **Methodology 2: Causal Ablation** | **Layer 1, Head 3 (L1H3)** | Highest Accuracy Drop ($\Delta \mathcal{L} = +2.41$) |
-
-### The Analytical Paradox
-* **L0H1** looks exactly where an induction head *should* look, yet ablating it causes negligible performance drops.
-* **L1H3** does not showcase a pristine shifted-diagonal attention map, yet knocking it out completely breaks the model's capacity to complete the induction sequence.
-
----
-
 # Mechanistic Induction Interpretability
 
 A mechanistic interpretability project investigating how induction behavior emerges inside small Transformer models.
@@ -309,6 +282,14 @@ They simply perform different roles.
 
 ---
 
+## 📊 Empirical Observations & Discrepancies
+
+| Measurement Approach | Primary Target Identified | Metric Value / Impact |
+| :--- | :--- | :--- |
+| **Methodology 1: Attention Score** | **Layer 0, Head 1 (L0H1)** | `0.91` (Perfect Shifted Diagonal) |
+| **Methodology 2: Causal Ablation** | **Layer 1, Head 3 (L1H3)** | Highest Accuracy Drop ($\Delta \mathcal{L} = +2.41$) |
+
+---
 # Why This Matters
 
 Many beginner interpretability projects assume:
