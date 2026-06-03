@@ -10,7 +10,21 @@ This repository contains a mechanistic interpretability pipeline designed to ope
 
 ## 🔬 Core Research Framework
 
-An induction head is characterized by a specific computational sub-routine: it searches for a previous occurrence of the current token $A$, looks at the subsequent token $B$, and copies that information to predict $B$ when $A$ recurs ($[A][B] \dots [A] \rightarrow \text{predict } [B]$).
+First of all what is an induction behaviour?
+
+It is an in-context learning behavior displayed by the attention heads and it is a 2 step mechanism involving at  least 2 heads. In simpler terms, one head is responsible for storing the current token and its previous one and the next head is responsible for pattern matching in order to predict the next token given the current one.
+
+1.Previous token head is responsible for encoding the representation of current token and the previous token
+2.Induction head performs pattern recognition and copying. As soon as it matches a repeating token,it searches the information stored by the previous token head as the token preceding the current one and use that previous token for predicting next token.
+
+Mechanistically, the induction head breaks down into two specific circuits:
+
+     •	The QK (Query-Key) Circuit (Where to attend): This determines where the model should focus its attention. For an induction head, the QK circuit learns to attend back to the previous occurrence of the current token.
+     •	The OV (Output-Value) Circuit (What to copy): Once the attention is directed to the past occurrence, the OV circuit takes over. Its job is to take the token that followed that past occurrence and boost its logit (its probability score), effectively copying it as the prediction for the next token.
+     
+A Concrete Example: Imagine a sequence where the pattern "abcde" repeats. When the model is at the second "a" in "abcdeabcde", the induction head searches the past context, finds the first "a", notes that it was followed by "b", and uses that information to predict that "b" should come next.
+Different circuit activations -> Triggering different attention heads -> Induction behaviour
+Induction head matches current token with the previous token embedding held by the “previous token” head and hence can predict the next token
 
 We investigate two distinct methodologies to identify and track these heads, exposing a fascinating discrepancy between **geometric correlation** and **functional causality**.
 
