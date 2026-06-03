@@ -186,6 +186,11 @@ that follows A in the pattern.
 This OV circuit analysis is very important in analyzing whether a particular attention head is actually following 
 induction behaviour by boosting the logits of the previous spcific repeated sequence token.
 
+# OV Circuit Heatmap
+
+<img width="1790" height="922" alt="image" src="https://github.com/user-attachments/assets/11d46cf1-c822-45e9-8cc1-6672d5ea6f8c" />
+
+
 # Experiment 2: Causal Head Ablation
 
 ## Hypothesis
