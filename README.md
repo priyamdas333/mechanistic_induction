@@ -307,8 +307,8 @@ They simply perform different roles.
 
 | Measurement Approach | Primary Target Identified | Metric Value / Impact |
 | :--- | :--- | :--- |
-| **Methodology 1: Attention Score** | **Layer 0, Head 1 (L0H1)** | `0.91` (Perfect Shifted Diagonal) |
-| **Methodology 2: Causal Ablation** | **Layer 1, Head 3 (L1H3)** | Highest Accuracy Drop ($\Delta \mathcal{L} = +2.41$) |
+| **Methodology 1: Attention Score** | **Layer 0, Head 3 (L0H3)** | `0.1094` (Induction score) |
+| **Methodology 2: Causal Ablation** | **Layer 1, Head 1 (L1H1)** | Highest Accuracy Drop ($\Delta \mathcal{L} = +0.0509 $) |
 
 ---
 # Why This Matters
@@ -364,9 +364,9 @@ The strongest candidate explanation is that induction behavior emerges from coop
 Test whether:
 
 ```text
-Layer 0 Head 1
+Layer 0 Head 3
         →
-Layer 1 Head 3
+Layer 1 Head 1
 ```
 
 forms a genuine induction circuit.
@@ -374,14 +374,14 @@ forms a genuine induction circuit.
 Possible experiment:
 
 ```python
-ablate(L0H1)
+ablate(L0H3)
 ```
 
 and measure:
 
 * accuracy drop
-* attention changes in L1H3
-* activation changes in L1H3
+* attention changes in L1H1
+* activation changes in L1H1
 
 ---
 
@@ -396,7 +396,7 @@ Replace activations from clean runs into corrupted runs and identify causal path
 Measure whether:
 
 ```text
-L0H1 → L1H3
+L0H3 → L1H1
 ```
 
 forms a compositional attention circuit.
