@@ -143,7 +143,7 @@ This creates a characteristic shifted-diagonal structure in the attention matrix
 The highest induction score was observed for:
 
 ```text
-Layer 0 Head 1
+Layer 0 Head 3
 ```
 
 This head consistently exhibited induction-like attention patterns.
@@ -167,6 +167,9 @@ However:
 > Attention reveals where information is retrieved from, not whether the retrieved information is actually important.
 
 A head may attend to the correct location while contributing little to the final prediction.
+
+<img width="1790" height="922" alt="image" src="https://github.com/user-attachments/assets/e4eac005-69c0-4cbc-8a73-322787c970e7" />
+
 
 ---
 # OV Circuit Analysis
